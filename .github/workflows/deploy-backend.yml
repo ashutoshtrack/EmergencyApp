@@ -1,4 +1,4 @@
-name: Deploy Backend
+name: Backend CI/CD
 
 on:
   push:
@@ -6,30 +6,26 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-start:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: '16'
 
-      - name: Install dependencies
+      - name: Install Backend Dependencies
+        working-directory: ./backend
         run: npm install
 
-      - name: Zip the backend code
-        run: zip -r function.zip .
+      - name: Run Backend Tests
+        working-directory: ./backend
+        run: npm test
 
-      - name: Deploy to Lambda
-        run: |
-          aws lambda update-function-code \
-            --function-name EmergencyBackendFunction \
-            --zip-file fileb://function.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ap-south-1
+      - name: Deploy Backend (Optional)
+        # Add deployment step if needed (e.g., deploy to AWS, Heroku, or similar)
+        run: echo "Deploying Backend..."
