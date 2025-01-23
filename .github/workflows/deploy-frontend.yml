@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18' # Update Node.js version to match your project's requirement
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Frontend
         working-directory: ./frontend
-        run: npm run build
+        run: npm run build-android
 
       - name: Deploy Frontend (Optional)
         # You can add steps here to deploy the frontend (e.g., to S3, Firebase, or Vercel).

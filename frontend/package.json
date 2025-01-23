@@ -7,7 +7,14 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "clean-android": "cd android && ./gradlew clean && cd ..",
+    "clean-ios": "cd ios && xcodebuild clean && cd ..",
+    "bundle-android": "mkdir -p android/app/src/main/assets/ && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "build-android": "npm run bundle-android && cd android && ./gradlew assembleRelease && cd ..",
+    "build-ios": "cd ios && xcodebuild -scheme EmergencyApp -workspace EmergencyApp.xcworkspace -configuration Release build",
+    "build-web": "expo build:web",
+    "build-all": "npm run build-android && npm run build-ios && npm run build-web"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.1.0",
