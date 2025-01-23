@@ -1,0 +1,12 @@
+{
+  "resourceName": "emergencystore",
+  "policyUUID": "0ea617c6",
+  "bucketName": "emergencyappdb80b18e7990453eb1dd2a5efa557e45",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE"
+  ],
+  "triggerFunction": "S3Triggere9068a58",
+  "groupAccess": {}
+}

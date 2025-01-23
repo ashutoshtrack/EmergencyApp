@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
-
-const port = 3000;
+const transcribeRoutes = require("./routes/transcribeRoutes");
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use("/api", transcribeRoutes); // Use transcription routes
 
 // Dummy routes
 app.get("/", (req, res) => {
@@ -53,6 +53,5 @@ app.post("/notifications", (req, res) => {
   res.status(200).send(`Notification sent to friends: ${friends.join(", ")}`);
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
