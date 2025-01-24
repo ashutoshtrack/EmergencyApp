@@ -31,9 +31,7 @@ jobs:
         run: |
           amplify pull \
             --appId ${{ secrets.AMPLIFY_APP_ID }} \
-            --envName ${{ secrets.AMPLIFY_ENV }} \
-            --accessKeyId ${{ secrets.AWS_ACCESS_KEY_ID }} \
-            --secretAccessKey ${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+            --envName ${{ secrets.AMPLIFY_ENV }} 
             --yes --debug
 
       - name: Install Frontend Dependencies
