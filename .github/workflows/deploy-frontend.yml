@@ -16,7 +16,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Update Node.js version to match your project's requirement
+          node-version: '18' 
+
+      - name: Install Amplify CLI
+        run: npm install -g @aws-amplify/cli
+
+      - name: Configure Amplify
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          amplify pull --appId ${{ secrets.AMPLIFY_APP_ID }} --envName ${{ secrets.AMPLIFY_ENV }} --yes
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
@@ -26,6 +37,9 @@ jobs:
         working-directory: ./frontend
         run: npm run build-android
 
-      - name: Deploy Frontend (Optional)
-        # You can add steps here to deploy the frontend (e.g., to S3, Firebase, or Vercel).
-        run: echo "Deploying Frontend..."
+      - name: Deploy Frontend to Amplify
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: amplify publish --yes
